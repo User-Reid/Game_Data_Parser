@@ -24,6 +24,8 @@ public class App
   {
     new AddToDirectory(GameDirectory);
     GameRepository.Read(GameDirectory);
+    new AddToDirectory(GameDirectory);
+    GameRepository.Read(GameDirectory);
     
     // writeToDirectory.WriteJson(GameDirectory);
   }
@@ -67,7 +69,7 @@ public class AddToDirectory
     var newGame = new VideoGame(name, releaseYear, rating);
 
     gameDirectory.Add(newGame);
-    System.Console.WriteLine($"{gameDirectory[0].Name}, {gameDirectory[0].ReleaseYear},{gameDirectory[0].Rating}\r\nHas been added to your directory!");
+    System.Console.WriteLine($"{newGame.Name}\r\nHas been added to your directory!");
   }
 
 }
