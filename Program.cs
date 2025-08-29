@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 
 var _videoGameDirectory = new VideoGameDirectory();
 var _videoGameRepository = new VideoGameRepository();
@@ -51,13 +52,22 @@ public class VideoGame
 //   public void Read(List<VideoGame> gameDirectory, string filePath);
 // }
 
+// Now i have to make it so that the user input sets the values for the coresponding VideoGame object. It then adds the object to the VideoGame Directory list.
 public class AddToDirectory
 {
   public AddToDirectory(List<VideoGame> gameDirectory)
   {
-    var newGame = new VideoGame("Halo", 2030, 3.6);
+    // var newGame = new VideoGame("Halo", 2030, 3.6);
+    System.Console.WriteLine("What is the name of the game you would like to add?😄");
+    var name = Console.ReadLine();
+    System.Console.WriteLine("What year was the game released?⌛");
+    var releaseYear = int.Parse(Console.ReadLine());
+    System.Console.WriteLine("Finally, what would you rate this game 1.0 - 5.0?⭐");
+    var rating = double.Parse(Console.ReadLine());
+    var newGame = new VideoGame(name, releaseYear, rating);
+
     gameDirectory.Add(newGame);
-    System.Console.WriteLine($"{gameDirectory[0].Name}, {gameDirectory[0].ReleaseYear},{gameDirectory[0].Rating}");
+    System.Console.WriteLine($"{gameDirectory[0].Name}, {gameDirectory[0].ReleaseYear},{gameDirectory[0].Rating}\r\nHas been added to your directory!");
   }
 
 }
