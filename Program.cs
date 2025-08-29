@@ -1,5 +1,8 @@
-﻿var _videoGameDirectory = new VideoGameDirectory();
-var _application = new App(_videoGameDirectory.GameDirectory);
+﻿using System.Text.Json;
+
+var _videoGameDirectory = new VideoGameDirectory();
+var _videoGameRepository = new VideoGameRepository();
+var _application = new App(_videoGameDirectory.GameDirectory, _videoGameRepository.Read);
 
 _application.Run();
 
@@ -8,19 +11,19 @@ Console.ReadKey();
 public class App
 {
   public List<VideoGame> GameDirectory { get; }
+  public VideoGameRepository GameRepository {get;}
 
-  public App(List<VideoGame> gameDirectory)
+  public App(List<VideoGame> gameDirectory, VideoGameRepository gameRepository)
   {
     GameDirectory = gameDirectory;
+    GameRepository = gameRepository;
   }
 
   public void Run()
   {
     var writeToDirectory = new WriteToDirectory();
 
-    writeToDirectory.Write(GameDirectory);
-
-
+    // writeToDirectory.WriteJson(GameDirectory);
   }
 }
 public class VideoGameDirectory
@@ -42,11 +45,68 @@ public class VideoGame
   }
 }
 
-public class WriteToDirectory
+// public interface IVideoGameRepository {
+//   public void Write(List<VideoGame> gameDirectory);
+//   public void Read(List<VideoGame> gameDirectory, string filePath);
+// }
+
+public class AddToDirectory
 {
-  public void Write(List<VideoGame> gameDirectory)
+  public AddToDirectory(List<VideoGame> gameDirectory)
   {
-    gameDirectory.Add(new VideoGame("Halo", 2030, 3.6));
+    var newGame = new VideoGame("Halo", 2030, 3.6);
+    gameDirectory.Add(newGame);
     System.Console.WriteLine($"{gameDirectory[0].Name}, {gameDirectory[0].ReleaseYear},{gameDirectory[0].Rating}");
+  }
+
+}
+
+public interface IVideoGameRepository
+{
+  void Read(List<VideoGame> gameDirectory);
+  void Write(string filePath, List<VideoGame> directory);
+}
+
+// public class VideoGameRepository : IVideoGameRepository
+public class VideoGameRepository
+
+{
+  public void Read(List<VideoGame> gameDirectory)
+  {
+    foreach (VideoGame videoGame in gameDirectory)
+    {
+      System.Console.WriteLine($"Title: {videoGame.Name}\r\nRelease Year: {videoGame.ReleaseYear} \r\nRating: {videoGame.Rating}");
+    }
+  }
+  // public void Write(string filePath, List<VideoGame> directory)
+  // {
+  //   var writeToDirectory = new WriteToDirectory();
+  //   foreach (VideoGame videoGame in directory) {
+      
+  //   }
+
+  //   writeToDirectory.WriteJson(filePath, );
+  // }
+  
+}
+
+public class WriteToDirectory : VideoGameRepository
+{
+  public void WriteJson(string filePath, List<string> videoGame)
+  {
+    var _videoGameToDirectory = JsonSerializer.Serialize(videoGame);
+    File.WriteAllText(filePath, _videoGameToDirectory);
+    System.Console.WriteLine(_videoGameToDirectory);
+  }
+}
+
+public class ReadDirectory : VideoGameRepository
+{
+  public void ReadJson(List<VideoGame> gameDirectory, string filePath)
+  {
+
+          var _deserializedDirectory = JsonSerializer.Deserialize<List<VideoGame>>(filePath);
+
+    
   }
 }
