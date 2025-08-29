@@ -1,2 +1,6 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using Game_Data_Parser.App;
+using Game_Data_Parser.VideoGameDirectory;
+
+Run(new GameDirectory(), new GameRepository());
+
+Console.ReadKey();
