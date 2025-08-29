@@ -2,7 +2,7 @@
 
 var _videoGameDirectory = new VideoGameDirectory();
 var _videoGameRepository = new VideoGameRepository();
-var _application = new App(_videoGameDirectory.GameDirectory, _videoGameRepository.Read);
+var _application = new App(_videoGameDirectory.GameDirectory, _videoGameRepository);
 
 _application.Run();
 
@@ -21,8 +21,9 @@ public class App
 
   public void Run()
   {
-    var writeToDirectory = new WriteToDirectory();
-
+    new AddToDirectory(GameDirectory);
+    GameRepository.Read(GameDirectory);
+    
     // writeToDirectory.WriteJson(GameDirectory);
   }
 }
