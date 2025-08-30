@@ -2,7 +2,6 @@ using Game_Data_Parser.VideoGameDirectory;
 
 namespace Game_Data_Parser.VideoGameRepository;
 
-  
 
 public interface IVideoGameRepository
 {

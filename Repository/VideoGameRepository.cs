@@ -22,7 +22,8 @@ public class Repository
 
   public List<VideoGame> ReadJson(string filePath)
   {
-    return JsonSerializer.Deserialize<List<VideoGame>>(filePath);
+      string jsonConent = File.ReadAllText(filePath);
+    return JsonSerializer.Deserialize<List<VideoGame>>(jsonConent);
   }
 }
 }

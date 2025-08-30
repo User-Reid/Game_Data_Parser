@@ -15,24 +15,28 @@ public class App
     GameRepository = gameRepository;
   }
 
-  public void Run()
-  {
-    new AddToDirectory(GameDirectory);
-    GameRepository.Read(GameDirectory);
-    new AddToDirectory(GameDirectory);
-    GameRepository.Read(GameDirectory);
-    if (!File.Exists("video-game-directory.json"))
+    public void Run()
     {
-      GameRepository.WriteJson("video-game-directory.json", GameDirectory);
-    }
-    else
-    {
-      System.Console.WriteLine("You already have a video-game-directory file :)");
-    }
+      new AddToDirectory(GameDirectory);
+      GameRepository.Read(GameDirectory);
+      new AddToDirectory(GameDirectory);
+      GameRepository.Read(GameDirectory);
+      if (!File.Exists("video-game-directory.json"))
+      {
+        GameRepository.WriteJson("video-game-directory.json", GameDirectory);
+      }
+      else
+      {
+        System.Console.WriteLine("You already have a video-game-directory file :)");
+      }
 
-    GameRepository.ReadJson("video-game-directory");
+      System.Console.WriteLine("Reading file from JSON now..");
+      System.Console.WriteLine("Printing JSON now..");
+      List<VideoGame> _directory = GameRepository.ReadJson("video-game-directory.json");
+      GameRepository.Read(_directory);
+      System.Console.WriteLine("it should have printed above.");
 
     // writeToDirectory.WriteJson(GameDirectory);
-  }
+    }
 }
 }
